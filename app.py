@@ -41,20 +41,20 @@ def nyskra():
 def add():
     if request.method == 'POST':
         n = request.form['notandanafn']
-        p = request.form['password']
+        pw = request.form['password']
         nafn = request.form['nafn']
 
         cur = conn.cursor()
         cur.execute("SELECT count(*) FROM users where user = %s",(n))
         p = cur.fetchone()
         if p[0] != 1:
-            cur.execute("INSERT INTO users(user,pass,nafn) VALUES(%s,%s,%s)",(n,p,nafn))
+            cur.execute("INSERT INTO users(user,pass,nafn) VALUES(%s,%s,%s)",(n,pw,nafn))
             conn.commit()
             cur.close()
+            return render_template("nyr.html")
 
         else:
-            pass
-    return "Bætum við!"
+            return render_template("tekid.html")
 
 @app.route('/utskra')
 def utskra():
